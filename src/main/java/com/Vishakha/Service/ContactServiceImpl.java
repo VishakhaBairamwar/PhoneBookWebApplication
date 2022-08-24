@@ -1,6 +1,7 @@
 package com.Vishakha.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -63,7 +64,7 @@ public class ContactServiceImpl implements ContactServiceI  {
 	//hard Delete
 	@Override
 	public boolean deleteById(Integer cid) {
-		boolean existsById = contactRepository.existsById(cid);
+		/*boolean existsById = contactRepository.existsById(cid);
 		if (existsById) {
 			contactRepository.deleteById(cid);
 			return true;
@@ -81,6 +82,20 @@ public class ContactServiceImpl implements ContactServiceI  {
 		}else {
 				return false;
 			}*/
+	
+	//soft delete
+	
+	Optional<Contact> contact = contactRepository.findById(cid);
+
+	if (contact.isPresent()) {
+		Contact contact2 = contact.get();
+		contact2.setActiveSwitch('N');
+		contactRepository.save(contact2);
+		return true;
+	} else
+		return false;
+
+}
 
 	
 }
