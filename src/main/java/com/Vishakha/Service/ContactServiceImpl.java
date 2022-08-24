@@ -43,5 +43,11 @@ public class ContactServiceImpl implements ContactServiceI  {
 	return collect;
 }
 
+	@Override
+	public Contact getContactById(Integer cid) {
+		Contact findById = contactRepository.findById(cid).get();
+		return findById;
+	}
+
 	
 }
